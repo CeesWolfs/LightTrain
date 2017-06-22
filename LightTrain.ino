@@ -38,7 +38,7 @@ void loop() {
   while (sensor1 > SENSOR_THRESHOLD) {
     ms++;
     sensor2 = analogRead(A1);
-    if(sensor2 < SENSOR_TRESHOLD) break;
+    if(sensor2 < SENSOR_THRESHOLD) break;
     delay(1);
   }
   snelheid = AFSTAND_TRAJECT/(float)ms;
