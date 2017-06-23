@@ -10,7 +10,10 @@
 #define NUMPIXELS      10
 #define SENSOR_THRESHOLD 400    
 
-#define AFSTAND_TRAJECT 350.0
+#define IDLE_TIME 300*1000
+#define WIT pixels.Color(255,255,255)
+#define UIT pixels.Color(0,0,0)
+#define KLEUR pixels.Color(200, 100, 0)
 
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
@@ -19,7 +22,8 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 
 const int sensor1;
 int delayval = 200; // delay for half a second
-int ms = 0;         // Aantal milliseconden dat de trein over het traject sensor1 -> sensor2 doet
+int ms = 0;         // Aantal milliseconden dat de trein erover doet om sensor 1 te passeren.
+int laatste_trein   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
 int aantal_leds;
 boolean trein_langs;
 
@@ -27,7 +31,7 @@ void setup() {
   pixels.begin(); // This initializes the NeoPixel library.
   for(int i=0;i<NUMPIXELS;i++){
     // Zet de beginkleur op wit
-    pixels.setPixelColor(i, pixels.Color(255, 255, 255));
+    pixels.setPixelColor(i, WIT);
   }
   pixels.show(); 
 }
@@ -42,14 +46,25 @@ void loop() {
   }
   aantal_leds = ms/delayval;
   if(trein_langs) {
+    laatste_trein = millis();
     for(int i=0;i<NUMPIXELS;i++){
-
-      // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-      pixels.setPixelColor(i, pixels.Color(0,150,0)); // Moderately bright green color.
-
-      pixels.show(); // This sends the updated pixel color to the hardware.
-
-      delay(delayval); // Delay for a period of time (in milliseconds).
-
+      int achterste_led = i - aantal_leds;
+      if(achterste_led >= 0) {
+        pixels.setPixelColor(achterste_led, WIT);
+      }
+      pixels.setPixelColor(i, KLEUR); 
+      pixels.show();
+      delay(delayval); 
+    }
+    trein_langs = false;
+    ms = 0;
+  }
+  if(millis() - laatste_trein > IDLE_TIME) {
+    // De trein is al lang niet langsgeweest, zet de lampjes uit
+    for(int i=0;i<NUMPIXELS;i++){
+      // Zet de lampjes uit
+      pixels.setPixelColor(i, UIT);
+    }
+    pixels.show();
   }
 }
