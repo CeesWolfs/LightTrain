@@ -47,7 +47,7 @@ void setup() {
 
 void loop() {
   sensor1 = analogRead(A0);
-  while (sensor1 > SENSOR_THRESHOLD) {
+  while (sensor1 < SENSOR_THRESHOLD) {
     ms++;
     delay(1);
     trein_langs = true;
