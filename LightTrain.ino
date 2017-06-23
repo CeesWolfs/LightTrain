@@ -3,25 +3,25 @@
 
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-  #include <avr/power.h>
+#include <avr/power.h>
 #endif
 
-#define PIN            6
+#define PIN            4
 #define NUMPIXELS      10
 #define SENSOR_THRESHOLD 400    
 
-#define IDLE_TIME 300*1000
+#define IDLE_TIME 15*1000
 #define WIT pixels.Color(255,255,255)
 #define UIT pixels.Color(0,0,0)
 
 #if (delayval >= 200)
-  #define KLEUR pixels.Color(0, 150, 0)
+#define KLEUR pixels.Color(0, 150, 0)
 #elif (delayval < 200) 
-  #define KLEUR pixels.Color(200,144,0)
+#define KLEUR pixels.Color(200,144,0)
 #elif (delayval < 150) 
-  #define KLEUR pixels.Color(200, 100, 0)
+#define KLEUR pixels.Color(200, 100, 0)
 #else 
-  #define KLEUR pixels.Color(200, 0, 0)
+#define KLEUR pixels.Color(200, 0, 0)
 #endif
 
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
@@ -35,6 +35,7 @@ int ms = 0;         // Aantal milliseconden dat de trein erover doet om sensor 1
 int laatste_trein;   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
 int aantal_leds;
 boolean trein_langs;
+
 
 void setup() {
   pixels.begin(); // This initializes the NeoPixel library.
@@ -55,20 +56,22 @@ void loop() {
   }
   aantal_leds = ms/delayval;
   if(trein_langs) {
-    laatste_trein = millis();
-    for(int i=0;i<NUMPIXELS;i++){
+    for(int i=0;i<NUMPIXELS+aantal_leds;i++){
       int achterste_led = i - aantal_leds;
       if(achterste_led >= 0) {
         pixels.setPixelColor(achterste_led, WIT);
       }
-      pixels.setPixelColor(i, KLEUR); 
+      if (i < NUMPIXELS) {
+        pixels.setPixelColor(i, KLEUR);
+      } 
       pixels.show();
       delay(delayval); 
     }
     trein_langs = false;
     ms = 0;
+    laatste_trein = millis();
   }
-  if(millis() - laatste_trein > IDLE_TIME) {
+  if((millis() - laatste_trein) > IDLE_TIME) {
     // De trein is al lang niet langsgeweest, zet de lampjes uit
     for(int i=0;i<NUMPIXELS;i++){
       // Zet de lampjes uit
