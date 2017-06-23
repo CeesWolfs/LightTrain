@@ -4,7 +4,7 @@
    Dit komt omdat onze ogen felheid van licht niet linear ervaren zie https://learn.adafruit.com/led-tricks-gamma-correction/the-issue
    voor een betere uitleg
 */
-const unsigned char gamma8[] = {
+constexpr unsigned char gamma8[] = {
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
     1,  1,  1,  1,  1,  1,  1,  1,  1,  2,  2,  2,  2,  2,  2,  2,
@@ -22,6 +22,7 @@ const unsigned char gamma8[] = {
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 };
 
-const unsigned long kleur(unsigned char r, unsigned char g, unsigned char b) {
-   return ((unsigned long)r << 16) | ((unsigned long)g <<  8) | b;
+// constexpr om te voorkomen dat de hele array gecompileerd wordt, C++ magie maar je kunt de functie normaal gebruiken
+constexpr unsigned long kleur(unsigned char r, unsigned char g, unsigned char b) { 
+   return ((unsigned long)gamma8[r] << 16) | ((unsigned long)gamma8[g] <<  8) | gamma8[b];
 }
