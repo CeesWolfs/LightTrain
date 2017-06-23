@@ -29,10 +29,10 @@
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-const int sensor1;
+int sensor1;
 int delayval = 200; // delay for half a second
 int ms = 0;         // Aantal milliseconden dat de trein erover doet om sensor 1 te passeren.
-int laatste_trein   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
+int laatste_trein;   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
 int aantal_leds;
 boolean trein_langs;
 
