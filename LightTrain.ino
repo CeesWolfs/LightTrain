@@ -10,7 +10,7 @@
 #define NUMPIXELS      10
 #define SENSOR_THRESHOLD 400    
 
-#define IDLE_TIME 15*1000
+#define IDLE_TIME 300*1000
 #define WIT pixels.Color(255,255,255)
 #define UIT pixels.Color(0,0,0)
 
@@ -32,7 +32,7 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 int sensor1;
 int delayval = 200; // delay for half a second
 int ms = 0;         // Aantal milliseconden dat de trein erover doet om sensor 1 te passeren.
-int laatste_trein;   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
+unsigned long laatste_trein;   // Aantal milliseconden sinds de laatste keer dat de trein langskwam.
 int aantal_leds;
 boolean trein_langs;
 
