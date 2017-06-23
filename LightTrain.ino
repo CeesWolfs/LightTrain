@@ -1,6 +1,7 @@
 // Ledstrip trein code (c) 2017 Cees Wolfs
 // released under the MIT license
 
+#include "gamma_correctie.h"
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
 #include <avr/power.h>
@@ -11,17 +12,17 @@
 #define SENSOR_THRESHOLD 400    
 
 #define IDLE_TIME 300*1000
-#define WIT pixels.Color(255,255,255)
-#define UIT pixels.Color(0,0,0)
+#define WIT kleur(255,255,255)
+#define UIT kleur(0,0,0)
 
 #if (delayval >= 200)
-#define KLEUR pixels.Color(0, 150, 0) // Groen de trein 
+#define KLEUR kleur(0, 150, 0) // Groen de trein gaat langzaam
 #elif (delayval < 200) 
-#define KLEUR pixels.Color(200,144,0)
+#define KLEUR kleur(200, 200, 0) // Geel de trein gaat niet snel
 #elif (delayval < 150) 
-#define KLEUR pixels.Color(200, 100, 0)
+#define KLEUR kleur(200, 120, 0) // Oranje de trein gaat vrij snel 
 #else 
-#define KLEUR pixels.Color(200, 0, 0)
+#define KLEUR kleur(200, 0, 0)   // Rood de trein gaat vol gas
 #endif
 
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
