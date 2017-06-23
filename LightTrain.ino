@@ -13,7 +13,16 @@
 #define IDLE_TIME 300*1000
 #define WIT pixels.Color(255,255,255)
 #define UIT pixels.Color(0,0,0)
-#define KLEUR pixels.Color(200, 100, 0)
+
+#if (delayval >= 200)
+  #define KLEUR pixels.Color(0, 150, 0)
+#elif (delayval < 200) 
+  #define KLEUR pixels.Color(200,144,0)
+#elif (delayval < 150) 
+  #define KLEUR pixels.Color(200, 100, 0)
+#else 
+  #define KLEUR pixels.Color(200, 0, 0)
+#endif
 
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
