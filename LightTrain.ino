@@ -19,7 +19,7 @@
 #define KLEUR kleur(0, 200, 0) // Groen de trein gaat langzaam
 #elif (delayval < 200)
 #define KLEUR kleur(200, 200, 0) // Geel de trein gaat niet snel
-#elif (delayval < 150)
+#elif (delayval >= 150)
 #define KLEUR kleur(200, 120, 0) // Oranje de trein gaat vrij snel 
 #else
 #define KLEUR kleur(200, 0, 0)   // Rood de trein gaat vol gas
