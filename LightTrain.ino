@@ -7,12 +7,12 @@
 #include <avr/power.h>
 #endif
 
-#define PIN            4
-#define NUMPIXELS      10
-#define SENSOR_THRESHOLD 400
+#define PIN            4       // Ledjes w
+#define NUMPIXELS      10      // Aantal ledjes in de neopixel ledstring
+#define SENSOR_THRESHOLD 400   // Waarde waaronder de sensor komt als er een trein langsgaat, expirimenteel bepaald
 
-#define IDLE_TIME 300L*1000L
-#define WIT kleur(255,255,255)
+#define IDLE_TIME 300L*1000L   // Na 5 minuten moeten de lampjes weer uit gaan
+#define WIT kleur(255,255,255) 
 #define UIT kleur(0,0,0)
 
 #if (delayval >= 200)
