@@ -7,7 +7,7 @@
 #include <avr/power.h>
 #endif
 
-#define PIN            4       // Ledjes w
+#define PIN            4       // Ledjes worden bestuurd vanaf deze pin
 #define NUMPIXELS      10      // Aantal ledjes in de neopixel ledstring
 #define SENSOR_THRESHOLD 400   // Waarde waaronder de sensor komt als er een trein langsgaat, expirimenteel bepaald
 
