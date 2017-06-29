@@ -47,18 +47,22 @@ void setup() {
 
 void loop() {
   int sensor1 = analogRead(A0);
+  int sensor2 = analogRead(A1);
   int aantal_leds;
-  boolean trein_aangekomen = false;
+  boolean trein_komt = false;
   int ms = 0;         // Aantal milliseconden dat de trein erover doet om sensor 1 te passeren.
 
   while (sensor1 < SENSOR_THRESHOLD) { // Sensor is laag, de trein komt langs
     ms++;
     delay(1);
-    trein_aangekomen = true;  // Er is een trein aangekomen
     sensor1 = analogRead(A0); // Herhaal deze loop totdat de waarde waar hoog is, dus totdat de trein voorbij is
+    trein_komt = true;  // Er komt een trein aan
   }
   aantal_leds = ms / delayval; // Het aantal ledjes dat de trein breedt is = hoelang de trein overover doet gedeeld door hoelang een ledje duurt
-  if (trein_aangekomen) {          // Als er een trein langsgekomen is doe het volgende:
+  if (trein_komt) {          // Als er een trein aankomt is doe het volgende:
+    while (sensor2 > SENSOR_THRESHOLD) { // Wacht totdat de trein bij het begin van de ledstrip is
+       sensor2 = analogRead(A1);
+    }
     for (int i = 0; i < NUMPIXELS + aantal_leds; i++) { // Beetje ingewikkeld, tel tot het aantal ledjes + het aantal ledjes dat de trein lang is
       int achterste_led = i - aantal_leds;    // Dit doe ik zo om ook het terugschakelen van de ledjes te regelen
       if (achterste_led >= 0) {               // Als de trein helemaal op de ledstrip is moeten er weer lampjes op de rust kleur worden gezet
