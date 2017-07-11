@@ -1,8 +1,8 @@
 // Ledstrip trein code (c) 2017 Cees Wolfs
 // released under the MIT license
 
-#include "gamma_correctie.h"
-#include <Adafruit_NeoPixel.h>
+#include "gamma_correctie.h"   // Kleurcorrecties, zie het bestand zelf
+#include <Adafruit_NeoPixel.h> // Gebruik de neopixel library
 #ifdef __AVR__
 #include <avr/power.h>
 #endif
@@ -64,7 +64,7 @@ void loop() {
     while (sensor2 > SENSOR_THRESHOLD) { // Wacht totdat de trein bij het begin van de ledstrip is
        sensor2 = analogRead(A1);
     }
-    for (int i = 0; i < NUMPIXELS + aantal_leds; i++) { // Beetje ingewikkeld, tel tot het aantal ledjes + het aantal ledjes dat de trein lang is
+    for (int i = 0; i < NUMPIXELS + aantal_leds; i++) { // Tel tot het aantal ledjes + het aantal ledjes dat de trein lang is
       int achterste_led = i - aantal_leds;    // Dit doe ik zo om ook het terugschakelen van de ledjes te regelen
       if (achterste_led >= 0) {               // Als de trein helemaal op de ledstrip is moeten er weer lampjes op de rust kleur worden gezet
         pixels.setPixelColor(achterste_led, WIT);
